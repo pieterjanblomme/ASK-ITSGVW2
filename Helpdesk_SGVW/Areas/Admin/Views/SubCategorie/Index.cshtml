@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Helpdesk_SGVW.Models.SubCategorie>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Nieuwe subcategorie</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subcategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Verantwoordelijke)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Verantwoordelijke2)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subcategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorie.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verantwoordelijke)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verantwoordelijke2)
+            </td>
+            <td style="width:150px">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-primary text-white" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit">Bewerk</i>
+                    </a>
+
+                    <a class="btn btn-success text-white" asp-action="Details" asp-route-Id="@item.Id">
+                        <i class="fas fa-list-alt">Details</i>
+                    </a>
+
+                    <a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="@item.Id">
+                        <i class="fas fa-trash-alt">Wis</i>
+                    </a>
+                </div>
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

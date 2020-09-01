@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Ticket>
+
+@if (Model.Count() > 0)
+{
+    @*<div class="col-12 post @Model.FirstOrDefault().Categorie.Naam.Replace(" ",string.Empty) menu-restaurant">
+        <div class="row">
+            <h3 class="text-success"> @Model.FirstOrDefault().Categorie.Naam </h3>
+        </div>*@
+
+        @foreach (var item in Model)
+        {
+            <div class="border border-infos rounded col-12" style="margin-bottom:10px; margin-top:10px; padding:10px">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+
+                        @if (item.SchoolId == 1)
+                        {
+                            <img srcset="/images/IM.png" title="IM" />
+                        }
+                        @if (item.SchoolId == 2)
+                        {
+                            <img srcset="/images/VT.png" title="VT" />
+                        }
+                        @if (item.SchoolId == 3)
+                        {
+                            <img srcset="/images/AI.png" title="AI" />
+                        }
+                        @if (item.SchoolId == 4)
+                        {
+                            <img srcset="/images/CV.png" title="CV" />
+                        }
+                        @if (item.SchoolId == 5)
+                        {
+                            <img srcset="/images/SB.png" title="SB" />
+                        }
+                        <center>
+                            <img srcset="/images/logo/askit3.png" title="Ask-IT" />
+                        </center>
+                    </div>
+                    <div class="col-md-9 col-sm-12">
+                        <div class="row pr-3">
+                            <div class="col-12 text-right" style="color:#212a79">
+                                <b>
+                                    @if (@item.Status == "1")
+                                    {<label style="color:red">Open</label>}
+                                    @if (@item.Status == "2")
+                                    {<label style="color:blue">Opgevolgd </label>}
+                                    @if (@item.Status == "3")
+                                    {<label style="color:green">Afgewerkt </label>}
+                                </b>
+                            </div>
+                        </div>
+
+
+                        <div class="row col-12 text-justify d-none d-md-block">
+                            <p><label style="color:#212a79">Op @item.Datum stelde je een vraag over @item.SubCategorie.Subcategorie </label> </p>
+                            <hr />
+                            <p><b>Je vraag: </b> <i>@Html.Raw(item.Omschrijving)</i> </p>
+                            <p><b>Ticket ID: </b> <i>@item.Id</i></p>
+                            <p>
+                                <b>Urgentie: </b><i>
+                                    @if (@item.Urgentie == "1")
+                                    {<label class="text-body">Laag</label>}
+                                    @if (@item.Urgentie == "2")
+                                    {<label class="text-primary">Hoog</label>}
+                                    @if (@item.Urgentie == "3")
+                                    {<label style="color:red">Prioritair</label>}
+                                </i>
+                            </p>
+                            <p>
+
+                                @if (@item.Status == "2" || @item.Status == "3")
+                                {
+                                <p>
+                                    <b>Opvolger: </b><i>
+                                        @if (@item.Opvolger == "1")
+                                        {<label>André Delanghe</label>}
+                                        @if (@item.Opvolger == "2")
+                                        {<label>Frederick D'alleine</label>}
+                                        @if (@item.Opvolger == "3")
+                                        {<label>Pieterjan Blomme</label>}
+                                        @if (@item.Opvolger == "4")
+                                        {<label>Sander Loones</label>}
+                                    </i>
+                                </p>
+
+                                <p><i>@item.Uitleg</i></p>
+
+                            }
+                            </div>
+
+
+                            <div class="col-md-3 col-sm-9 offset-md-9 text-center">
+                                <a class="btn btn-succes form-control" asp-area="Personeel" asp-controller="Ticket" asp-action="Details" asp-route-id="@item.Id">Bekijk en bewerk</a>
+                            </div>
+
+
+                        </div>
+                </div>
+            </div>
+        }
+        <div class="p-4"></div>
+    @*</div>*@
+}

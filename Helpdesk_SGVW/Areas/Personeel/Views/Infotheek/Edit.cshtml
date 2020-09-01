@@ -1,0 +1,79 @@
+﻿@model Helpdesk_SGVW.Models.Infotheek
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bewerk het item</h1>
+
+<h4>Infotheek</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Titel" class="control-label"></label>
+                <input asp-for="Titel" class="form-control" />
+                <span asp-validation-for="Titel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Omschrijving" class="control-label"></label>
+                @Html.TextAreaFor(m => m.Omschrijving, new { @class = "form-control" })
+                <span asp-validation-for="Omschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Omschrijving" class="control-label"></label>
+                <input asp-for="Omschrijving" class="form-control" />
+                <span asp-validation-for="Omschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategorieId" class="control-label"></label>
+                <select asp-for="CategorieId" class="form-control" asp-items="ViewBag.CategorieId"></select>
+                <span asp-validation-for="CategorieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategorieId" class="control-label"></label>
+                <select asp-for="SubCategorieId" class="form-control" asp-items="ViewBag.SubCategorieId"></select>
+                <span asp-validation-for="SubCategorieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList<Infotheek.EType>()" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag1" class="control-label"></label>
+                <input asp-for="Tag1" class="form-control" />
+                <span asp-validation-for="Tag1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag2" class="control-label"></label>
+                <input asp-for="Tag2" class="form-control" />
+                <span asp-validation-for="Tag2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag3" class="control-label"></label>
+                <input asp-for="Tag3" class="form-control" />
+                <span asp-validation-for="Tag3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Bewaar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Terug naar overzicht</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

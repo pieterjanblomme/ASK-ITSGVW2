@@ -1,0 +1,21 @@
+﻿<div class="row">
+    <div class="col-5">
+        <input type="submit" class="btn btn-infos form-control" value="Bewaar" />
+    </div>
+    <div class="col-5">
+
+        @if (User.IsInRole("Manager"))
+        {<a asp-action="Index" asp-area="Personeel" asp-controller="Ticket" class="btn btn-success2 form-control">Terug</a>}
+        else
+        {<a asp-action="Overzicht" asp-area="Personeel" asp-controller="Home" class="btn btn-success2 form-control">Terug</a>}
+    </div>
+
+
+</div>
+
+
+
+
+
+@*<a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="Id">
+    <i class="fas fa-trash-alt">Wis</i>*@

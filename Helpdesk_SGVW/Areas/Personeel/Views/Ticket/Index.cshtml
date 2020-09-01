@@ -1,0 +1,184 @@
+﻿@model IEnumerable<Helpdesk_SGVW.Models.Ticket>
+
+@using Helpdesk_SGVW.Models.ViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+ Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Op te volgen tickets</h1>
+
+<p>
+    <a asp-action="Create">Nieuw ticket</a>
+</p>
+@using (Html.BeginForm("Index", "Ticket", "Personeel", FormMethod.Get))
+{
+    <p>
+
+        <div class="row" style="background-color:#fff">
+            <div class="col-md-3">
+                <label class="col-form-label">Ticket ID: </label> @Html.TextBox("zoektermId", null, new { @class = "form-control" })
+                <label class="col-form-label">Omschrijving: </label> @Html.TextBox("zoektermOmschrijving", null, new { @class = "form-control" })
+                <label class="col-form-label">Categorie: </label> @Html.TextBox("zoektermCategorie", null, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-1">
+            </div>
+
+            <div class="col-md-3">
+                <label class="col-form-label">Aanvrager: </label>@Html.TextBox("zoektermAanvrager", null, new { @class = "form-control" })
+                <label class="col-form-label">School: </label>@Html.TextBox("zoektermSchool", null, new { @class = "form-control" })                
+                <label class="col-form-label" style="color:white">Zoek: </label><input type="submit" value="Zoek" class="btn btn-succes form-control" />
+
+
+            </div>
+
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-3">
+                <label class="col-form-label">Status: </label>@Html.DropDownList("zoektermStatus", new SelectList(Enum.GetValues(typeof(Ticket.EStatus))), "Selecteer status", new { @class = "form-control" })
+                <label class="col-form-label">Opvolger: </label>@Html.DropDownList("zoektermOpvolger", new SelectList(Enum.GetValues(typeof(Ticket.EOpvolger))), "Selecteer opvolger", new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+            </div>
+
+        </div>
+
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Omschrijving)
+            </th>
+            <th>
+                @Html.ActionLink("Urgentie", "Index", new { sortOrder = ViewBag.UrgentieSortParm })
+                @*@Html.DisplayNameFor(model => model.Urgentie)*@
+            </th>
+
+            <th>
+                @Html.ActionLink("Categorie", "Index", new { sortOrder = ViewBag.CategorieSortParm })
+                @*@Html.DisplayNameFor(model => model.Categorie)*@
+            </th>
+            <th>
+                @Html.ActionLink("Subcategorie", "Index", new { sortOrder = ViewBag.SubCategorieSortParm })
+                @*@Html.DisplayNameFor(model => model.SubCategorie)*@
+            </th>
+            <th>
+                @Html.ActionLink("School", "Index", new { sortOrder = ViewBag.SchoolSortParm })
+                @*@Html.DisplayNameFor(model => model.School)*@
+            </th>
+            <th>
+                @Html.ActionLink("Aanvrager", "Index", new { sortOrder = ViewBag.NameSortParm })
+                @*@Html.DisplayNameFor(model => model.Aanvrager)*@
+            </th>
+            <th>
+                @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm })
+                @*@Html.DisplayNameFor(model => model.Status)*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opvolger)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(u => u.Status == "1" || u.Status == "2"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Omschrijving)
+                </td>
+                <td>
+                    @if (item.Urgentie == "3")
+                    {
+                        <label style="color:red">Prioritair</label>
+                    }
+                    @if (item.Urgentie == "2")
+                    {
+                        <label style="color:blue">Hoog</label>
+                    }
+                    @if (item.Urgentie == "1")
+                    {
+                        <label style="color:black">Laag</label>
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categorie.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubCategorie.Subcategorie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.School.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aanvrager)
+                </td>
+                <td>
+                    @if (item.Status == "1")
+                    {
+                        <label style="color:red"><b>Open</b></label>
+                        @*@Html.DisplayFor(modelItem => item.Status)*@
+                    }
+                    @if (item.Status == "2")
+                    {
+                        <label style="color:blue"><b>In opvolging</b></label>
+                        @*@Html.DisplayFor(modelItem => item.Status)*@
+                    }
+                    @if (item.Status == "3")
+                    {
+                        <label style="color:green"><b>Afgewerkt</b></label>
+                        @*@Html.DisplayFor(modelItem => item.Status)*@
+                    }
+                </td>
+                <td>
+                    @if (item.Opvolger == "0")
+                    {<label>Niemand</label>}
+                    @if (item.Opvolger == "1")
+                    {<label>André</label>}
+                    @if (item.Opvolger == "2")
+                    {<label>Fréderick</label>}
+                    @if (item.Opvolger == "3")
+                    {<label>Pieterjan</label>}
+                    @if (item.Opvolger == "4")
+                    {<label>Sander</label>}
+                </td>
+                <td>
+                <td style="width:150px">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary text-white" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="fas fa-edit">Bewerk</i>
+                        </a>
+
+                        <a class="btn btn-success text-white" asp-action="Details" asp-route-Id="@item.Id">
+                            <i class="fas fa-list-alt">Details</i>
+                        </a>
+
+                        <a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="@item.Id">
+                            <i class="fas fa-trash-alt">Wis</i>
+                        </a>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,35 @@
+﻿<div class="row">
+    <div class="col-3">
+        @if (@Model.Status != "3")
+        {
+            <a asp-action="Edit" asp-area="Personeel" asp-controller="Ticket" asp-route-id="@Model.Id" class="btn btn-infos form-control">Bewerk</a>
+            
+        }
+    </div>
+
+    <div class="col-3">
+        <a asp-action="Delete" asp-area="Personeel" asp-controller="Ticket" asp-route-id="@Model.Id" class="btn btn-wis text-white form-control">Wis</a>
+    </div>
+
+
+    <div class="col-3">
+        @if (User.IsInRole("Manager"))
+        {
+            @if (@Model.Status != "3")
+            {
+                <a asp-action="Index" asp-area="Personeel" asp-controller="Ticket" class="btn btn-success2 form-control">Terug</a>
+            }
+            @if (Model.Status == "3")
+            {
+                <a asp-action="IndexArchief" asp-area="Personeel" asp-controller="Ticket" class="btn btn-success2 form-control">Terug</a>
+            }
+        }
+        else
+        {
+           <a asp-action="Overzicht" asp-area="Personeel" asp-controller="Home" class="btn btn-success2 form-control">Terug</a>
+        }
+    </div>
+
+</div>
+
+

@@ -1,0 +1,109 @@
+﻿@model Helpdesk_SGVW.Models.ViewModel.SubCategorieEnCategorieViewModel
+@using Helpdesk_SGVW.Extensions
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Nieuwe subcategorie</h1>
+
+<h4>SubCategorie</h4>
+<hr />
+
+<partial name="StatusBericht" model="Model.StatusBericht" />
+
+<div class="border backgroundWhite row">
+    <div class="col-8 border-right">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategorie.CategorieId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select id="ddlCategorylist" asp-for="SubCategorie.CategorieId" asp-items="Model.CategorieLijst.ToSelectListItem(Model.SubCategorie.CategorieId)" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategorie.Subcategorie" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategorie.Subcategorie" class="form-control" />
+                </div>
+                <span asp-validation-for="SubCategorie.Subcategorie" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategorie.Verantwoordelijke" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategorie.Verantwoordelijke" class="form-control" />
+                </div>
+                <span asp-validation-for="SubCategorie.Verantwoordelijke" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategorie.Verantwoordelijke2" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategorie.Verantwoordelijke2" class="form-control" />
+                </div>
+                <span asp-validation-for="SubCategorie.Verantwoordelijke2" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-3">
+                    <partial name="MaakEnTerugNaarLijst" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 offset-1">
+        @if (Model.SubCategorieLijst.Count() > 0)
+        {
+            <p> Bestaande Sub categorieën: </p>
+
+            <div id="SubCategorieLijst">
+                <ul class="list-group"></ul>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+function updateSubCategorieLijst() {
+            var categorieSelected = document.getElementById("ddlCategorielijst").value;
+
+            $list = $('#SubCategorieLijst');
+
+            $.ajax({
+                url: '/Admin/SubCategorie/GetSubCategorie/' + categorieSelected,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $list.html('');
+                    $list.append(' <ul class="list-group"> ');
+                    for (i in results) {
+                        $list.append('<li class="list-group-item">' + results[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+                }
+
+            });
+
+        }
+
+        $(document).ready(function () {
+            updateSubCategorieLijst();
+        });
+
+        $("#ddlCategorylist").on("change", function () {
+            updateSubCategorieLijst();
+        });</script>
+
+}

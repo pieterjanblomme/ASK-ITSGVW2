@@ -1,0 +1,142 @@
+﻿@model Helpdesk_SGVW.Models.ViewModel.TicketViewModel
+@using Helpdesk_SGVW.Extensions
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ticket bewerken</h1>
+
+<h4>Ticket</h4>
+<hr />
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Ticket.Id" />
+
+            <div class="form-group row">
+                <label asp-for="Ticket.Aanvrager" class="col-form-label"></label>
+                <input asp-for="Ticket.Aanvrager" value="@Model.Ticket.Aanvrager" class="form-control" />
+                <span asp-validation-for="Ticket.Aanvrager" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                @*<label type="hidden" asp-for="Ticket.EmailAanvrager" class="col-form-label"></label>*@
+                <input type="hidden" asp-for="Ticket.EmailAanvrager" value="@User.Identity.Name" class="form-control" />
+                <span asp-validation-for="Ticket.EmailAanvrager" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+
+                <label asp-for="Ticket.Omschrijving" class="col-form-label"></label>
+
+                @Html.TextAreaFor(m => m.Ticket.Omschrijving, new { @class = "form-control" })
+
+                <span asp-validation-for="Ticket.Omschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Ticket.Urgentie" class="control-label"></label>
+                <select asp-for="Ticket.Urgentie" asp-items="Html.GetEnumSelectList<Ticket.EUrgentie>()" class="form-control"></select>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Ticket.Screenshot" class="col-form-label"></label>
+                <input type="file" name="files" multiple class="form-control" />
+            </div>
+
+
+            <div class="form-group row">
+                <label asp-for="Ticket.CategorieId" class="control-label"></label>
+                <select asp-for="@Model.Ticket.CategorieId" id="CategorieId" asp-items="@Model.Categorie.ToSelectListItem(Model.Ticket.CategorieId)" class="form-control"></select>
+                <span asp-validation-for="Ticket.CategorieId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Ticket.SubCategorieId" class="control-label"></label>
+                <select asp-for="@Model.Ticket.SubCategorieId" name="SubCategorieId" id="SubCategorieId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Naam"))"></select>
+                <span asp-validation-for="Ticket.SubCategorieId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Ticket.SchoolId" class="control-label"></label>
+                <select asp-for="@Model.Ticket.SchoolId" id="SchoolId" class="form-control" asp-items="@Model.School.ToSelectListItem(Model.Ticket.SchoolId)"></select>
+                <span asp-validation-for="Ticket.SchoolId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Ticket.Lokaal" class="control-label"></label>
+                <input asp-for="Ticket.Lokaal" class="form-control" />
+                <span asp-validation-for="Ticket.Lokaal" class="text-danger"></span>
+            </div>
+
+
+
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-3">
+
+
+            @if (User.IsInRole("Manager"))
+            {
+                <div class="form-group row">
+                    <label asp-for="Ticket.Status" class="control-label"></label>
+                    <select asp-for="Ticket.Status" asp-items="Html.GetEnumSelectList<Ticket.EStatus>()" class="form-control"></select>
+                    <span asp-validation-for="Ticket.Status" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Ticket.Opvolger" class="control-label"></label>
+                    <select asp-for="Ticket.Opvolger" asp-items="Html.GetEnumSelectList<Ticket.EOpvolger>()" class="form-control"></select>
+                    <span asp-validation-for="Ticket.Opvolger" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+
+                    <label asp-for="Ticket.Uitleg" class="col-form-label"></label>
+
+                    @Html.TextAreaFor(m => m.Ticket.Uitleg, new { @class = "form-control" })
+
+                    <span asp-validation-for="Ticket.Uitleg" class="text-danger"></span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-3 offset-0">
+            <partial name="BewerkenOverzicht" />
+        </div>
+
+    </div>
+</form>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategorie();
+            $('#CategorieId').change(function () {
+                getSubCategorie();
+            });
+        });
+
+
+        function getSubCategorie() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategorie/GetSubCategorie";
+            var ddlsoruce = '#CategorieId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategorieId').empty();
+                $.each(data, function (i, subcategorie) {
+                    items += "<option value='" + subcategorie.value + "'>" + subcategorie.text + "</option>";
+                });
+
+                $('#SubCategorieId').html(items);
+            })
+        }
+    </script>
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

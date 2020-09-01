@@ -1,0 +1,43 @@
+﻿@model Helpdesk_SGVW.Models.SubCategorie
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>SubCategorie</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subcategorie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subcategorie)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Categorie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categorie.Naam)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Verantwoordelijke)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categorie.Verantwoordelijke)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Verantwoordelijke2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categorie.Verantwoordelijke2)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

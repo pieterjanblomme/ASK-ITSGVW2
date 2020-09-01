@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Helpdesk_SGVW.Models.Infotheek>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Nieuw item aanmaken</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Omschrijving)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubCategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorie.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubCategorie.Subcategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tag1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tag2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tag3)
+            </td>
+            <th>
+                @if (item.Type == "1")
+                {
+                    <label>Instructiefilmpje</label>
+                }
+                @if (item.Type == "2")
+                {
+                    <label>Webinar</label>
+                }
+                @if (item.Type == "3")
+                {
+                    <label>Handleiding</label>
+                }
+                @if (item.Type == "4")
+                {
+                    <label>url</label>
+                }
+            </th>
+            <td style="width:150px">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-primary text-white" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit">Bewerk</i>
+                    </a>
+
+                    <a class="btn btn-success text-white" asp-action="Details" asp-route-Id="@item.Id">
+                        <i class="fas fa-list-alt">Details</i>
+                    </a>
+
+                    <a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="@item.Id">
+                        <i class="fas fa-trash-alt">Wis</i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

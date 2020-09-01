@@ -1,0 +1,31 @@
+﻿@model Helpdesk_SGVW.Models.ViewModel.IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        @*<h1 class="display-4">ASK-IT</h1>*@
+        <img srcset="/images/logo/Askit.png" title="IM" />
+        <p>We helpen je graag verder!</p>
+        <h1><label style="color:white">@User.FindFirst("name").Value </label></h1>
+        <p></p><p></p>
+    </div>
+    <center>
+
+       
+            <table>
+                <tr>
+
+                    <th width="150"><a class="btn btn-start" asp-action="Create" asp-controller="Ticket" asp-area="Personeel">Nieuw ticket aanmaken</a></p></th>
+                    <th width="50"></th>
+                    <th width="150"><a class="btn btn-start" asp-area="Personeel" asp-controller="Home" asp-action="Overzicht">Volg je tickets op</a></p></th>
+                    <th width="50"></th>
+                    <th width="150"><a class="btn btn-start" asp-area="Personeel" asp-controller="Home" asp-action="OverzichtInfotheek">Infotheek</a></p></th>
+
+                </tr>
+            </table>
+
+
+    </center>
+

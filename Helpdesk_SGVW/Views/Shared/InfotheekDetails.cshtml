@@ -1,0 +1,21 @@
+﻿<div class="row">
+    @if (User.IsInRole("Manager"))
+    {
+       <div class="col-5">
+        <a asp-action="Edit" asp-area="Personeel" asp-controller="Infotheek" asp-route-id="@Model.Id" class="btn btn-infos form-control">Bewerk</a>
+       </div>
+       <div class="col-5">
+        <a asp-action="Index" asp-area="Personeel" asp-controller="Infotheek" class="btn btn-success2 form-control">Terug</a>
+       </div>
+    }
+    else
+    {
+       <div class="col-5">
+        <a asp-action="OverzichtInfotheek" asp-area="Personeel" asp-controller="Home" class="btn btn-success2 form-control">Terug</a>
+       </div>
+    }
+</div>
+
+ 
+
+

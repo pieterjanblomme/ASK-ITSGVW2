@@ -1,0 +1,39 @@
+﻿@model Helpdesk_SGVW.Models.ViewModel.OverzichtViewModel
+
+@{
+    ViewData["Title"] = "Overzicht tickets";
+}
+
+
+    <div class="row" id="menu-wrapper">
+        
+        <partial name="ThumbnailArea" model="@Model.Ticket.Where(u=>u.Aanvrager.Equals(User.FindFirst("name").Value)).OrderByDescending(u=>u.Datum)" />
+    </div>
+
+    @section Scripts{
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous"></script>
+
+        <script>
+            var posts = $('.post');
+
+            (function ($) {
+
+                $("#menu-filters li").click(function () {
+                    $("#menu-filters li").removeClass('active btn btn-secondary');
+                    $(this).addClass('active btn btn-secondary');
+
+                    var selectedFilter = $(this).data("filter");
+
+                    $(".menu-restaurant").fadeOut();
+
+                    setTimeout(function () {
+                        $(selectedFilter).slideDown();
+                    }, 300);
+                });
+
+
+
+            })(jQuery);</script>
+    }

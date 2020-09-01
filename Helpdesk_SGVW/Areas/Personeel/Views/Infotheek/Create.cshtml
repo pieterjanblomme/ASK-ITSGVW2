@@ -1,0 +1,107 @@
+﻿@model Helpdesk_SGVW.Models.ViewModel.InfotheekViewModel
+@using Helpdesk_SGVW.Extensions
+
+@{
+    ViewData["Title"] = "Nieuw Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Nieuw item aanmaken</h1>
+
+<h4>Infotheek</h4>
+<hr />
+<form asp-action="Create" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Infotheek.Titel" class="control-label"></label>
+                <input asp-for="Infotheek.Titel" class="form-control" />
+                <span asp-validation-for="Infotheek.Titel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Omschrijving" class="control-label"></label>
+                @Html.TextAreaFor(m => m.Infotheek.Omschrijving, new { @class = "form-control" })
+                <span asp-validation-for="Infotheek.Omschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.CategorieId" class="control-label"></label>
+                <select asp-for="@Model.Infotheek.CategorieId" id="CategorieId" asp-items="@Model.Categorie.ToSelectListItem(Model.Infotheek.CategorieId)" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.SubCategorieId" class="control-label"></label>
+                <select asp-for="@Model.Infotheek.SubCategorieId" name="SubCategorieId" id="SubCategorieId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Naam"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Type" class="control-label"></label>
+                <select asp-for="Infotheek.Type" asp-items="Html.GetEnumSelectList<Infotheek.EType>()" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Tag1" class="control-label"></label>
+                <input asp-for="Infotheek.Tag1" class="form-control" />
+                <span asp-validation-for="Infotheek.Tag1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Tag2" class="control-label"></label>
+                <input asp-for="Infotheek.Tag2" class="form-control" />
+                <span asp-validation-for="Infotheek.Tag2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Tag3" class="control-label"></label>
+                <input asp-for="Infotheek.Tag3" class="form-control" />
+                <span asp-validation-for="Infotheek.Tag3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infotheek.Url" class="control-label"></label>
+                <input asp-for="Infotheek.Url" class="form-control" />
+                <span asp-validation-for="Infotheek.Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Aanmaken" class="btn btn-primary" />
+            </div>
+</form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Terug naar overzicht</a>
+    </div>
+
+
+    @section Scripts{
+        @*<script>tinymce.init({
+                selector: 'textarea',
+                plugins: "lists",
+                menubar: 'file edit format'
+            });</script>*@
+
+
+        <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategorie();
+            $('#CategorieId').change(function () {
+                getSubCategorie();
+            });
+        });
+
+
+        function getSubCategorie() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategorie/GetSubCategorie";
+            var ddlsoruce = '#CategorieId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategorieId').empty();
+                $.each(data, function (i, subcategorie) {
+                    items += "<option value='" + subcategorie.value + "'>" + subcategorie.text + "</option>";
+                });
+
+                $('#SubCategorieId').html(items);
+            })
+        }
+        </script>
+
+
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

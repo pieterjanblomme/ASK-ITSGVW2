@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] ASK-IT</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="search-background">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #212a79">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ASK-IT</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img srcset="/images/logo/Askit3.png" title="Ask-IT" width="70" height="50" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Manager"))
+                        {
+                        <li class="nav-item dropdown text-white-50">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Beheer
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Categorie" asp-area="Admin">Categorieën</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="SubCategorie" asp-area="Admin">Subcategorieën</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="School" asp-area="Admin">Scholen</a>
+                                
+                            </div>
+                        </li>
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Helpdesk
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">                                   
+                                    <a class="dropdown-item" asp-area="Personeel" asp-controller="Ticket" asp-action="Index">Op te volgen tickets</a>
+                                    <a class="dropdown-item" asp-area="Personeel" asp-controller="Ticket" asp-action="IndexArchief">Archief tickets</a>
+
+
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Infotheek
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+
+                                    <a class="dropdown-item" asp-area="Personeel" asp-controller="Infotheek" asp-action="Index">Items infotheek</a>
+
+
+                                </div>
+                            </li>
+                        }
+                        @*<li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>*@
+
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top pl-3 footer text-white-50" style="background-color:#212a97">
+        <div class="container">
+            &copy; 2020 - ASK-IT - Pieterjan Blomme <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

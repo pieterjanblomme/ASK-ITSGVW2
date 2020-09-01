@@ -1,0 +1,133 @@
+﻿@model Helpdesk_SGVW.Models.Ticket
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1><img srcset="/images/logo/askit3.png" title="Askit" />Bekijk je ticket</h1>
+
+<div>
+    <h4>Ticket ID: @Html.DisplayFor(model => model.Id)</h4>
+    <div class="row">
+        <div class="col-5 offset-0">
+            <partial name="BewerkenOverzichtTerugNaarLijst" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-7">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Datum)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Datum)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Aanvrager)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Aanvrager)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Omschrijving)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Omschrijving)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Urgentie)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.Urgentie == "3")
+                    {
+                        <label style="color:red">Prioritair</label>
+                    }
+                    @if (Model.Urgentie == "2")
+                    {
+                        <label style="color:blue">Hoog</label>
+                    }
+                    @if (Model.Urgentie == "1")
+                    {
+                        <label style="color:black">Laag</label>
+                    }
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Categorie)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Categorie.Naam)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.SubCategorieId)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.SubCategorie.Subcategorie)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.School)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.School.Naam)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Lokaal)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Lokaal)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.Status == "1")
+                    {
+                        <label style="color:red">Open</label>
+                    }
+                    @if (Model.Status == "2")
+                    {
+                        <label style="color:blue">In opvolging</label>
+                    }
+                    @if (Model.Status == "3")
+                    {
+                        <label style="color:green">Afgewerkt</label>
+                    }
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Opvolger)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.Opvolger == "0")
+                    {<label>Niemand</label>}
+                    @if (Model.Opvolger == "1")
+                    {<label>André</label>}
+                    @if (Model.Opvolger == "2")
+                    {<label>Fréderick</label>}
+                    @if (Model.Opvolger == "3")
+                    {<label>Pieterjan</label>}
+                    @if (Model.Opvolger == "4")
+                    {<label>Sander</label>}
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Uitleg)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Uitleg)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group row">
+                <div>
+                    <p></p>
+                    <img src="@Model.Screenshot" width="99%" style="border-radius:5px;border:1px solid #bbb9b9" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
