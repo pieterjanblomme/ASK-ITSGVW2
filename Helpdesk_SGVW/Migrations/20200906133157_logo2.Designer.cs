@@ -4,18 +4,20 @@ using Helpdesk_SGVW.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Helpdesk_SGVW.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200906133157_logo2")]
+    partial class logo2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -87,34 +89,6 @@ namespace Helpdesk_SGVW.Migrations
                     b.ToTable("Infotheek");
                 });
 
-            modelBuilder.Entity("Helpdesk_SGVW.Models.Opvolgers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Displaynaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Familienaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Voornaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Opvolgers");
-                });
-
             modelBuilder.Entity("Helpdesk_SGVW.Models.Personeel", b =>
                 {
                     b.Property<string>("Id")
@@ -180,9 +154,6 @@ namespace Helpdesk_SGVW.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Naam")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -191,6 +162,9 @@ namespace Helpdesk_SGVW.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Verantwoordelijke2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("logo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -235,9 +209,6 @@ namespace Helpdesk_SGVW.Migrations
                     b.Property<string>("Aanvrager")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AanvragerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CategorieId")
                         .HasColumnType("int");
 
@@ -255,9 +226,6 @@ namespace Helpdesk_SGVW.Migrations
 
                     b.Property<string>("Opvolger")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OpvolgerId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
@@ -279,11 +247,7 @@ namespace Helpdesk_SGVW.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AanvragerId");
-
                     b.HasIndex("CategorieId");
-
-                    b.HasIndex("OpvolgerId");
 
                     b.HasIndex("SchoolId");
 
@@ -318,19 +282,11 @@ namespace Helpdesk_SGVW.Migrations
 
             modelBuilder.Entity("Helpdesk_SGVW.Models.Ticket", b =>
                 {
-                    b.HasOne("Helpdesk_SGVW.Models.Personeel", "Personeel")
-                        .WithMany()
-                        .HasForeignKey("AanvragerId");
-
                     b.HasOne("Helpdesk_SGVW.Models.Categorie", "Categorie")
                         .WithMany()
                         .HasForeignKey("CategorieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Helpdesk_SGVW.Models.Personeel", "PersoneelOpv")
-                        .WithMany()
-                        .HasForeignKey("OpvolgerId");
 
                     b.HasOne("Helpdesk_SGVW.Models.School", "School")
                         .WithMany()

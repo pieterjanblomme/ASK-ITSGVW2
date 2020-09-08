@@ -19,17 +19,17 @@
 
         <div class="row" style="background-color:#fff">
             <div class="col-md-3">
-                <label class="col-form-label">Ticket ID: </label> @Html.TextBox("zoektermId", null, new { @class = "form-control" })
-                <label class="col-form-label">Omschrijving: </label> @Html.TextBox("zoektermOmschrijving", null, new { @class = "form-control" })
-                <label class="col-form-label">Categorie: </label> @Html.TextBox("zoektermCategorie", null, new { @class = "form-control" })
+                @Html.TextBox("zoektermId", null, new { @placeholder = "TicketID", @class = "form-control" })<br />
+                @Html.TextBox("zoektermOmschrijving", null, new { @placeholder = "Omschrijving", @class = "form-control" })<br />
+                @Html.TextBox("zoektermCategorie", null, new { @placeholder = "Categorie", @class = "form-control" })<br />
             </div>
 
             <div class="col-md-1">
             </div>
 
             <div class="col-md-3">
-                <label class="col-form-label">Aanvrager: </label>@Html.TextBox("zoektermAanvrager", null, new { @class = "form-control" })
-                <label class="col-form-label">School: </label>@Html.TextBox("zoektermSchool", null, new { @class = "form-control" })                
+                @Html.TextBox("zoektermAanvrager", null, new { @placeholder = "Aanvrager", @class = "form-control" })<br />
+                @Html.TextBox("zoektermSchool", null, new { @placeholder = "School", @class = "form-control" })               
                 <label class="col-form-label" style="color:white">Zoek: </label><input type="submit" value="Zoek" class="btn btn-succes form-control" />
 
 
@@ -38,8 +38,8 @@
             <div class="col-md-1">
             </div>
             <div class="col-md-3">
-                <label class="col-form-label">Status: </label>@Html.DropDownList("zoektermStatus", new SelectList(Enum.GetValues(typeof(Ticket.EStatus))), "Selecteer status", new { @class = "form-control" })
-                <label class="col-form-label">Opvolger: </label>@Html.DropDownList("zoektermOpvolger", new SelectList(Enum.GetValues(typeof(Ticket.EOpvolger))), "Selecteer opvolger", new { @class = "form-control" })
+                @Html.DropDownList("zoektermStatus", new SelectList(Enum.GetValues(typeof(Ticket.EStatus))), "Selecteer status", new { @class = "form-control" })<br />
+                @Html.DropDownList("zoektermOpvolger", new SelectList(Enum.GetValues(typeof(Ticket.EOpvolger))), "Selecteer opvolger", new { @class = "form-control" })<br />
             </div>
             <div class="col-md-1">
             </div>
@@ -150,16 +150,11 @@
                     }
                 </td>
                 <td>
+                    
                     @if (item.Opvolger == "0")
                     {<label>Niemand</label>}
-                    @if (item.Opvolger == "1")
-                    {<label>André</label>}
-                    @if (item.Opvolger == "2")
-                    {<label>Fréderick</label>}
-                    @if (item.Opvolger == "3")
-                    {<label>Pieterjan</label>}
-                    @if (item.Opvolger == "4")
-                    {<label>Sander</label>}
+                    else {@Html.DisplayFor(modelItem => item.Opvolger)} 
+
                 </td>
                 <td>
                 <td style="width:150px">

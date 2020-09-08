@@ -24,8 +24,7 @@
             </div>
 
             <div class="form-group row">
-                @*<label type="hidden" asp-for="Ticket.EmailAanvrager" class="col-form-label"></label>*@
-                <input type="hidden" asp-for="Ticket.EmailAanvrager" value="@User.Identity.Name" class="form-control" />
+                <input type="hidden" asp-for="Ticket.EmailAanvrager"  class="form-control" />
                 <span asp-validation-for="Ticket.EmailAanvrager" class="text-danger"></span>
             </div>
 
@@ -86,7 +85,8 @@
 
                 <div class="form-group row">
                     <label asp-for="Ticket.Opvolger" class="control-label"></label>
-                    <select asp-for="Ticket.Opvolger" asp-items="Html.GetEnumSelectList<Ticket.EOpvolger>()" class="form-control"></select>
+                    @*<select asp-for="Ticket.Opvolger" asp-items="Html.GetEnumSelectList<Ticket.EOpvolger>()" class="form-control"></select>*@
+                    <input asp-for="Ticket.Opvolger" value="@User.FindFirst("name").Value" class="form-control" />
                     <span asp-validation-for="Ticket.Opvolger" class="text-danger"></span>
                 </div>
 

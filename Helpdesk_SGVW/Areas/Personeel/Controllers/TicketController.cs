@@ -220,7 +220,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 
             //stuur een mail
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("HelpdeskIT", "pieterjan.blomme@sgvw.be"));
+            message.From.Add(new MailboxAddress("HelpdeskIT", "ask-it@sgvw.be"));
             message.To.Add(new MailboxAddress("Aanvrager", TicketVM.Ticket.EmailAanvrager));
             message.To.Add(new MailboxAddress("VerantwoordelijkeSchool", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke));
             //message.To.Add(new MailboxAddress("VerantwoordelijkeSchool2", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke2));
@@ -249,7 +249,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.office365.com", 587, false);
-                client.Authenticate("blmpt@sgvw.be", "ICT8660@immac");
+                client.Authenticate("ask-it@sgvw.be", "Qav75583");
                 client.Send(message);
                 client.Disconnect(true);
             }
@@ -345,7 +345,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 
             //stuur een mail
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("HelpdeskIT", "pieterjan.blomme@sgvw.be"));
+            message.From.Add(new MailboxAddress("HelpdeskIT", "ask-it@sgvw.be"));
             message.To.Add(new MailboxAddress("Aanvrager", TicketVM.Ticket.EmailAanvrager));
             message.To.Add(new MailboxAddress("VerantwoordelijkeSchool", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke));
             //message.To.Add(new MailboxAddress("VerantwoordelijkeSchool2", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke2));
@@ -377,7 +377,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.office365.com", 587, false);
-                client.Authenticate("blmpt@sgvw.be", "ICT8660@immac");
+                client.Authenticate("ask-it@sgvw.be", "Qav75583");
                 client.Send(message);
                 client.Disconnect(true);
             }

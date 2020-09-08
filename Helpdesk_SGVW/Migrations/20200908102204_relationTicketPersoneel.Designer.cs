@@ -4,14 +4,16 @@ using Helpdesk_SGVW.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Helpdesk_SGVW.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200908102204_relationTicketPersoneel")]
+    partial class relationTicketPersoneel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,9 +258,6 @@ namespace Helpdesk_SGVW.Migrations
                     b.Property<string>("Opvolger")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpvolgerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
@@ -282,8 +281,6 @@ namespace Helpdesk_SGVW.Migrations
                     b.HasIndex("AanvragerId");
 
                     b.HasIndex("CategorieId");
-
-                    b.HasIndex("OpvolgerId");
 
                     b.HasIndex("SchoolId");
 
@@ -327,10 +324,6 @@ namespace Helpdesk_SGVW.Migrations
                         .HasForeignKey("CategorieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Helpdesk_SGVW.Models.Personeel", "PersoneelOpv")
-                        .WithMany()
-                        .HasForeignKey("OpvolgerId");
 
                     b.HasOne("Helpdesk_SGVW.Models.School", "School")
                         .WithMany()

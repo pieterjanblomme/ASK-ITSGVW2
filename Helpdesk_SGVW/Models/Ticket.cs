@@ -20,6 +20,9 @@ namespace Helpdesk_SGVW.Models
         [Display(Name = "Aanvrager")]
         public string Aanvrager { get; set; }
 
+        [ForeignKey("AanvragerId")]
+        public virtual Personeel Personeel { get; set; }
+
         [Display(Name = "EmailAanvrager")]
         public string EmailAanvrager { get; set; }
 
@@ -51,6 +54,12 @@ namespace Helpdesk_SGVW.Models
         [ForeignKey("SchoolId")]
         public virtual School School { get; set; }
 
+        //[Display(Name = "Beheerder")]
+        //public int BeheerderId { get; set; }
+
+        //[ForeignKey("BeheerderId")]
+        //public virtual Opvolgers Beheerder { get; set; }
+
         [Display(Name = "Lokaal")]
         public string Lokaal { get; set; }
 
@@ -60,7 +69,10 @@ namespace Helpdesk_SGVW.Models
 
         [Display(Name = "Opvolger")]
         public string Opvolger { get; set; }
-        public enum EOpvolger { Niemand, André, Frederick, Pieterjan, Sander, Patrick}
+
+        [ForeignKey("OpvolgerId")]
+        public virtual Personeel PersoneelOpv { get; set; }
+        public enum EOpvolger { Niemand, admin1, admin2, adminpj, adminsnd, adminPatrick}
 
         [Display(Name = "Uitleg")]
         public string Uitleg { get; set; }

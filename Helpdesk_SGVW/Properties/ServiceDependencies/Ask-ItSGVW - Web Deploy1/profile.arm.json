@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "AskITSGVW",
+      "defaultValue": "Ask-ItSGVW",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }

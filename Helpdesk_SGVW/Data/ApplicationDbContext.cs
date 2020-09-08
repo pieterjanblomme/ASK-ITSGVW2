@@ -22,5 +22,8 @@ namespace Helpdesk_SGVW.Data
         public DbSet<Personeel> Personeel { get; set; }
         public DbSet<Infotheek> Infotheek { get; set; }
 
+        public DbSet<Opvolgers> Opvolgers { get; set; }
+
+
     }
 }

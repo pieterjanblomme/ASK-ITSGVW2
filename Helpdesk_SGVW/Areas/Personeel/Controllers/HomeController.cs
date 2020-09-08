@@ -52,7 +52,7 @@ namespace Helpdesk_SGVW.Controllers
         {
             OverzichtViewModel OverzichtVM = new OverzichtViewModel()
             {
-                Ticket = await _db.Ticket.Include(m => m.Categorie).Include(m => m.SubCategorie).ToListAsync(),
+                Ticket = await _db.Ticket.Include(m => m.Categorie).Include(m => m.SubCategorie).Include(m=>m.School).ToListAsync(),
                 Categorie = await _db.Categorie.ToListAsync(),
                 //School = await _db.School.Where(c => c.IsActive == true).ToListAsync()
 

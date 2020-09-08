@@ -20,6 +20,11 @@
                 <span asp-validation-for="Naam" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Logo" class="control-label"></label>
+                <input asp-for="Logo" class="form-control" />
+                <span asp-validation-for="Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Verantwoordelijke" class="control-label"></label>
                 <input asp-for="Verantwoordelijke" class="form-control" />
                 <span asp-validation-for="Verantwoordelijke" class="text-danger"></span>
@@ -37,7 +42,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Terug naar lijst</a>
 </div>
 
 @section Scripts {

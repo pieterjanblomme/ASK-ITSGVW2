@@ -55,7 +55,7 @@ namespace Helpdesk_SGVW.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Naam,Verantwoordelijke,Verantwoordelijke2")] School school)
+        public async Task<IActionResult> Create([Bind("Id,Naam,Logo,Verantwoordelijke,Verantwoordelijke2")] School school)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Helpdesk_SGVW.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Naam,Verantwoordelijke,Verantwoordelijke2")] School school)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Naam,Logo,Verantwoordelijke,Verantwoordelijke2")] School school)
         {
             if (id != school.Id)
             {

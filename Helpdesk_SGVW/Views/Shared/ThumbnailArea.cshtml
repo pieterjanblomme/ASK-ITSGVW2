@@ -13,7 +13,8 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-12">
 
-                        @if (item.SchoolId == 1)
+                        <img srcset=@item.School.Logo title=@item.School.Naam />
+                        @*@if (item.SchoolId == 1)
                         {
                             <img srcset="/images/IM.png" title="IM" />
                         }
@@ -32,7 +33,7 @@
                         @if (item.SchoolId == 5)
                         {
                             <img srcset="/images/SB.png" title="SB" />
-                        }
+                        }*@
                         <center>
                             <img srcset="/images/logo/askit3.png" title="Ask-IT" />
                         </center>
@@ -81,6 +82,8 @@
                                         {<label>Pieterjan Blomme</label>}
                                         @if (@item.Opvolger == "4")
                                         {<label>Sander Loones</label>}
+                                        @if (@item.Opvolger == "5")
+                                        {<label>Patrick Timmermans</label>}
                                     </i>
                                 </p>
 
