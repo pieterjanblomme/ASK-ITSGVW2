@@ -15,6 +15,9 @@ namespace Helpdesk_SGVW.Models
         [Required]
         public string Naam { get; set; }
 
+        [Display(Name = "Logo")]
+        public string Logo { get; set; }
+
         [Display(Name = "Verantwoordelijke")]
         public string Verantwoordelijke { get; set; }
 

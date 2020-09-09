@@ -84,32 +84,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             _context.Infotheek.Add(InfotheekVM.Infotheek);
             await _context.SaveChangesAsync();
 
-            ////Work on the image saving section
-
-            //string webRootPath = _hostingEnvironment.WebRootPath;
-            //var files = HttpContext.Request.Form.Files;
-
-            //var ticketFromDb = await _context.Ticket.FindAsync(TicketVM.Ticket.Id);
-
-            //if (files.Count > 0)
-            //{
-            //    //files has been uploaded
-            //    var uploads = Path.Combine(webRootPath, "images");
-            //    var extension = Path.GetExtension(files[0].FileName);
-
-            //    using (var filesStream = new FileStream(Path.Combine(uploads, TicketVM.Ticket.Id + extension), FileMode.Create))
-            //    {
-            //        files[0].CopyTo(filesStream);
-            //    }
-            //    ticketFromDb.Screenshot = @"\images\" + TicketVM.Ticket.Id + extension;
-            //}
-            //else
-            //{
-            //    //no file was uploaded, so use default
-            //    var uploads = Path.Combine(webRootPath, @"images\" + "websitebg.png"); ;
-            //    System.IO.File.Copy(uploads, webRootPath + @"\images\" + TicketVM.Ticket.Id + ".png");
-            //    ticketFromDb.Screenshot = @"\images\" + TicketVM.Ticket.Id + ".png";
-            //}
+           
 
            
             await _context.SaveChangesAsync();
@@ -120,23 +95,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 
         }
 
-        // POST: Personeel/Infotheek/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Omschrijving,CategorieId,SubCategorieId,Tag1,Tag2,Tag3,Url")] Infotheek infotheek)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(infotheek);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CategorieId"] = new SelectList(_context.Categorie, "Id", "Naam", infotheek.CategorieId);
-        //    ViewData["SubCategorieId"] = new SelectList(_context.SubCategorie, "Id", "Subcategorie", infotheek.SubCategorieId);
-        //    return View(infotheek);
-        //}
+        
 
         // GET: Personeel/Infotheek/Edit/5
         public async Task<IActionResult> Edit(int? id)
