@@ -439,22 +439,6 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                 case "Niemand":
                     zoektermOpvolger = "0";
                     break;
-                case "André":
-                    zoektermOpvolger = "1";
-                    break;
-                case "Frederick":
-                    zoektermOpvolger = "2";
-                    break;
-                case "Pieterjan":
-                    zoektermOpvolger = "3";
-                    break;
-                case "Sander":
-                    zoektermOpvolger = "4";
-                    break;
-                case null:
-                    zoektermOpvolger = "";
-                    break;
-
             };
 
             switch (zoektermStatus)
