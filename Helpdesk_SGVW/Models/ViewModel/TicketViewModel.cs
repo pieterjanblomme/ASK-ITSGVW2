@@ -11,6 +11,7 @@ namespace Helpdesk_SGVW.Models.ViewModel
         public IEnumerable<Categorie> Categorie { get; set; }
         public IEnumerable<SubCategorie> SubCategorie { get; set; }
         public IEnumerable<School> School { get; set; }
-        public int Aantal { get; set; }
+
+        public List<string> SchoolLijst { get; set; }
     }
 }

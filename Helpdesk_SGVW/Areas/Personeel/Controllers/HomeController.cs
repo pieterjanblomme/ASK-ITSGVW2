@@ -34,8 +34,6 @@ namespace Helpdesk_SGVW.Controllers
             {
                 Ticket = await _db.Ticket.Include(m => m.Categorie).Include(m=>m.SubCategorie).ToListAsync(),
                 Categorie = await _db.Categorie.ToListAsync(),
-                //School = await _db.School.Where(c => c.IsActive == true).ToListAsync()
-
             };
 
             return View(IndexVM);
@@ -47,12 +45,12 @@ namespace Helpdesk_SGVW.Controllers
             return View();
         }
 
-        
+
         public async Task<IActionResult> Overzicht()
         {
             OverzichtViewModel OverzichtVM = new OverzichtViewModel()
             {
-                Ticket = await _db.Ticket.Include(m => m.Categorie).Include(m => m.SubCategorie).Include(m=>m.School).ToListAsync(),
+                Ticket = await _db.Ticket.Include(m => m.Categorie).Include(m => m.SubCategorie).Include(m => m.School).ToListAsync(),
                 Categorie = await _db.Categorie.ToListAsync(),
                 //School = await _db.School.Where(c => c.IsActive == true).ToListAsync()
 
@@ -68,7 +66,6 @@ namespace Helpdesk_SGVW.Controllers
             {
                 Infotheek = await _db.Infotheek.Include(m => m.Categorie).Include(m => m.SubCategorie).ToListAsync(),
                 Categorie = await _db.Categorie.ToListAsync(),
-                //School = await _db.School.Where(c => c.IsActive == true).ToListAsync()
 
             };
 
@@ -83,6 +80,7 @@ namespace Helpdesk_SGVW.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
 
         
     }

@@ -2,10 +2,6 @@
 
 @if (Model.Count() > 0)
 {
-    @*<div class="col-12 post @Model.FirstOrDefault().Categorie.Naam.Replace(" ",string.Empty) menu-restaurant">
-        <div class="row">
-            <h3 class="text-success"> @Model.FirstOrDefault().Categorie.Naam </h3>
-        </div>*@
 
         @foreach (var item in Model)
         {
@@ -14,26 +10,7 @@
                     <div class="col-md-3 col-sm-12">
 
                         <img srcset=@item.School.Logo title=@item.School.Naam />
-                        @*@if (item.SchoolId == 1)
-                        {
-                            <img srcset="/images/IM.png" title="IM" />
-                        }
-                        @if (item.SchoolId == 2)
-                        {
-                            <img srcset="/images/VT.png" title="VT" />
-                        }
-                        @if (item.SchoolId == 3)
-                        {
-                            <img srcset="/images/AI.png" title="AI" />
-                        }
-                        @if (item.SchoolId == 4)
-                        {
-                            <img srcset="/images/CV.png" title="CV" />
-                        }
-                        @if (item.SchoolId == 5)
-                        {
-                            <img srcset="/images/SB.png" title="SB" />
-                        }*@
+                        
                         <center>
                             <img srcset="/images/logo/askit3.png" title="Ask-IT" />
                         </center>
@@ -73,18 +50,7 @@
                                 @if (@item.Status == "2" || @item.Status == "3")
                                 {
                                 <p>
-                                    <b>Opvolger: </b><i>
-                                        @if (@item.Opvolger == "1")
-                                        {<label>André Delanghe</label>}
-                                        @if (@item.Opvolger == "2")
-                                        {<label>Frederick D'alleine</label>}
-                                        @if (@item.Opvolger == "3")
-                                        {<label>Pieterjan Blomme</label>}
-                                        @if (@item.Opvolger == "4")
-                                        {<label>Sander Loones</label>}
-                                        @if (@item.Opvolger == "5")
-                                        {<label>Patrick Timmermans</label>}
-                                    </i>
+                                    <b>Opvolger: </b><i>@item.Opvolger</i>
                                 </p>
 
                                 <p><i>@item.Uitleg</i></p>

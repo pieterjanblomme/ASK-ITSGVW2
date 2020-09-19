@@ -47,6 +47,7 @@ namespace Helpdesk_SGVW.Areas.Admin.Controllers
         // GET: Admin/School/Create
         public IActionResult Create()
         {
+            
             return View();
         }
 

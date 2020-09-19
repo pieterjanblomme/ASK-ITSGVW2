@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Helpdesk_SGVW.Data;
 using Helpdesk_SGVW.Models;
 using Helpdesk_SGVW.Models.ViewModel;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Helpdesk_SGVW.Models.Zoekmodel;
-using Helpdesk_SGVW.Services;
 using MimeKit;
 using MailKit.Net.Smtp;
+using System.Data;
+using ClosedXML.Excel;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 {
@@ -59,36 +58,13 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             var tickets = from s in _context.Ticket
                           select s;
 
+            
 
-
-            //if (zoektermId == 0) { zoektermId = ""; };
             if (string.IsNullOrEmpty(zoektermOmschrijving)) { zoektermOmschrijving = ""; };
             if (string.IsNullOrEmpty(zoektermAanvrager)) { zoektermAanvrager = ""; };
+            if (string.IsNullOrEmpty(zoektermOpvolger)) { zoektermOpvolger = ""; };
             if (string.IsNullOrEmpty(zoektermCategorie)) { zoektermCategorie = ""; };
             if (string.IsNullOrEmpty(zoektermSchool)) { zoektermSchool = ""; };
-            //if (string.IsNullOrEmpty(zoektermStatus)) { zoektermStatus = ""; };
-
-            switch (zoektermOpvolger)
-            {
-                case "Niemand":
-                    zoektermOpvolger = "0";
-                    break;
-                case "André":
-                    zoektermOpvolger = "1";
-                    break;
-                case "Frederick":
-                    zoektermOpvolger = "2";
-                    break;
-                case "Pieterjan":
-                    zoektermOpvolger = "3";
-                    break;
-                case "Sander":
-                    zoektermOpvolger = "4";
-                    break;
-                case null:
-                    zoektermOpvolger = "";
-                    break;
-            };
 
             switch (zoektermStatus)
             {
@@ -111,7 +87,6 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                 tickets =
 
                     applicationDbContext
-                    //.Where(s => s.Id.Equals(zoektermId))
                     .Where(s => s.Aanvrager.Contains(zoektermAanvrager))
                     .Where(s => s.Omschrijving.Contains(zoektermOmschrijving))
                     .Where(s => s.Categorie.Naam.Contains(zoektermCategorie))
@@ -130,8 +105,6 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             {
                 tickets = applicationDbContext;
             }
-
-
 
             switch (sortOrder)
             {
@@ -160,20 +133,21 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                     break;
 
                 default:
+
                     tickets = tickets.OrderByDescending(s => s.Datum);
                     break;
 
             };
 
-
-            //return View(await applicationDbContext.ToListAsync());
+            ViewBag.AantalTickets = tickets.Where(s => s.Status.Equals("1")||s.Status.Equals("2")).Count();            
             return View(await tickets.ToListAsync());
-            //return View(model);
+
 
         }
         //GET - CREATE
         public IActionResult Create()
         {
+            
             return View(TicketVM);
         }
 
@@ -191,7 +165,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             _context.Ticket.Add(TicketVM.Ticket);
             await _context.SaveChangesAsync();
 
-            //Work on the image saving section
+            //Bewaar afbeelding
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
@@ -200,7 +174,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 
             if (files.Count > 0)
             {
-                //files has been uploaded
+                //Afbeelding is upgeload
                 var uploads = Path.Combine(webRootPath, "images");
                 var extension = Path.GetExtension(files[0].FileName);
 
@@ -212,8 +186,8 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             }
             else
             {
-                //no file was uploaded, so use default
-                var uploads = Path.Combine(webRootPath, @"images\" + "websitebg.png"); ;
+                //Als er geen afbeelding is meegegeven
+                var uploads = Path.Combine(webRootPath, @"images\" + "askit.png"); ;
                 System.IO.File.Copy(uploads, webRootPath + @"\images\" + TicketVM.Ticket.Id + ".png");
                 ticketFromDb.Screenshot = @"\images\" + TicketVM.Ticket.Id + ".png";
             }
@@ -249,7 +223,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.office365.com", 587, false);
-                client.Authenticate("ask-it@sgvw.be", "Qav75583");
+                client.Authenticate("ask-it@sgvw.be", "Yoj01417");
                 client.Send(message);
                 client.Disconnect(true);
             }
@@ -298,7 +272,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                 return View(TicketVM);
             }
 
-            //Work on the image saving section
+            //Een afbeelding uploaden
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
@@ -307,11 +281,11 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
 
             if (files.Count > 0)
             {
-                //New Image has been uploaded
+                //Nieuwe image 
                 var uploads = Path.Combine(webRootPath, "images");
                 var extension_new = Path.GetExtension(files[0].FileName);
 
-                //Delete the original file
+                //Wis originele afbeelding
                 var imagePath = Path.Combine(webRootPath, menuItemFromDb.Screenshot.TrimStart('\\'));
 
                 if (System.IO.File.Exists(imagePath))
@@ -319,7 +293,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                     System.IO.File.Delete(imagePath);
                 }
 
-                //we will upload the new file
+                //Nieuwe afbeelding uploaden
                 using (var filesStream = new FileStream(Path.Combine(uploads, TicketVM.Ticket.Id + extension_new), FileMode.Create))
                 {
                     files[0].CopyTo(filesStream);
@@ -347,24 +321,13 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("HelpdeskIT", "ask-it@sgvw.be"));
             message.To.Add(new MailboxAddress("Aanvrager", TicketVM.Ticket.EmailAanvrager));
-            message.To.Add(new MailboxAddress("VerantwoordelijkeSchool", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke));
-            //message.To.Add(new MailboxAddress("VerantwoordelijkeSchool2", _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Verantwoordelijke2));
-            message.To.Add(new MailboxAddress("VerantwoordelijkeCategorie", _context.Categorie.Where(u => u.Id == TicketVM.Ticket.CategorieId).FirstOrDefault().Verantwoordelijke));
-            //message.To.Add(new MailboxAddress("VerantwoordelijkeCategorie2", _context.Categorie.Where(u => u.Id == TicketVM.Ticket.CategorieId).FirstOrDefault().Verantwoordelijke2));
-            message.To.Add(new MailboxAddress("VerantwoordelijkeSubCategorie", _context.SubCategorie.Where(u => u.Id == TicketVM.Ticket.SubCategorieId).FirstOrDefault().Verantwoordelijke));
-            //message.To.Add(new MailboxAddress("VerantwoordelijkeSubCategorie2", _context.SubCategorie.Where(u => u.Id == TicketVM.Ticket.SubCategorieId).FirstOrDefault().Verantwoordelijke2));
-
-
-            message.Subject = "Het ticket met Ticket-Id " + TicketVM.Ticket.Id + " werd bewerkt!";
+            
+                        message.Subject = "Het ticket met Ticket-Id " + TicketVM.Ticket.Id + " werd bewerkt!";
             message.Body = new TextPart("html")
             {
                 Text = "Beste collega <p>" +
                 "Uw ticket werd bewerkt: <br>" +
                 "<br><b> Ticket-Id: </b>" + TicketVM.Ticket.Id +
-                "<br><b> Aanvrager: </b>" + TicketVM.Ticket.Aanvrager +
-                "<br><b> Categorie: </b>" + _context.Categorie.Where(u => u.Id == TicketVM.Ticket.CategorieId).FirstOrDefault().Naam +
-                "<br><b> Subcategorie: </b>" + _context.SubCategorie.Where(u => u.Id == TicketVM.Ticket.SubCategorieId).FirstOrDefault().Subcategorie +
-                "<br><b> School: </b>" + _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Naam +
                 "<br><b> Omschrijving: </b><br>" + TicketVM.Ticket.Omschrijving +
                 "<p><br><b> Opvolging: </b><br>" + TicketVM.Ticket.Uitleg +
                 "<p>ga naar de helpdesk voor meer info!" +
@@ -377,7 +340,7 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.office365.com", 587, false);
-                client.Authenticate("ask-it@sgvw.be", "Qav75583");
+                client.Authenticate("ask-it@sgvw.be", "Yoj01417");
                 client.Send(message);
                 client.Disconnect(true);
             }
@@ -449,6 +412,8 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+
+
 
         private bool TicketExists(int id)
         {
@@ -536,10 +501,56 @@ namespace Helpdesk_SGVW.Areas.Personeel.Controllers
                 tickets = applicationDbContext;
             }
 
-            TicketVM.Aantal = tickets.Count();
             return View(await tickets.ToListAsync());
 
-
         }
+
+        public async Task<IActionResult> ExcelAsync()
+        {
+
+
+
+            IList<Ticket> TicketsEXP = await _context.Ticket.ToListAsync();
+             
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Ticket");
+                var currentRow = 1;
+                var currentCol = 1;
+
+                foreach (var property in TicketsEXP.GetType().GetGenericArguments()[0].GetProperties())
+                {
+                    worksheet.Cell(currentRow, currentCol).Style.Font.SetBold();
+                    worksheet.Cell(currentRow, currentCol++).Value = property.Name;                    
+                    
+                }
+                foreach (var item in TicketsEXP)
+                {
+                    currentCol = 1;
+                    currentRow++;
+
+                    foreach (var property in item.GetType().GetProperties())
+                    {
+                        worksheet.Cell(currentRow, currentCol++).Value = property.GetValue(item);
+                        //worksheet.Cell(currentRow, 10).Value = _context.School.Where(u => u.Id == TicketVM.Ticket.SchoolId).FirstOrDefault().Naam;
+                    }
+                }
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "Tickets.xlsx");
+                }
+            }
+        }
+
+
+
+
     }
 }

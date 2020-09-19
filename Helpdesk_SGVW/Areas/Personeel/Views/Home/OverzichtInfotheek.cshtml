@@ -7,7 +7,7 @@
 <div class="backgroundWhite container">
 
     <ul id="menu-filters" class="menu-filter-list list-inline text-center">
-        <li class="active btn btn-secondary ml-1 mr-1" data-filter=".menu-restaurant">Alles</li>
+        <li class="active btn btn-secondary ml-1 mr-1" data-filter=".menu-infotheek">Alles</li>
 
         @foreach (var item in Model.Categorie)
         {
@@ -41,7 +41,7 @@
 
                 var selectedFilter = $(this).data("filter");
 
-                $(".menu-restaurant").fadeOut();
+                $(".menu-infotheek").fadeOut();
 
                 setTimeout(function () {
                     $(selectedFilter).slideDown();

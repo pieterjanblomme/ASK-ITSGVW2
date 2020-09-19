@@ -74,6 +74,38 @@
     <a asp-action="Index">Terug naar overzicht</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    @*<script>tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });</script>*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategorie();
+            $('#CategorieId').change(function () {
+                getSubCategorie();
+            });
+        });
+
+
+        function getSubCategorie() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategorie/GetSubCategorie";
+            var ddlsoruce = '#CategorieId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategorieId').empty();
+                $.each(data, function (i, subcategorie) {
+                    items += "<option value='" + subcategorie.value + "'>" + subcategorie.text + "</option>";
+                });
+
+                $('#SubCategorieId').html(items);
+            })
+        }
+    </script>
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
